@@ -57,14 +57,12 @@
 #include <stan/lang/ast/node/algebra_solver_control_def.hpp>
 #include <stan/lang/ast/node/arg_decl_def.hpp>
 #include <stan/lang/ast/node/array_expr_def.hpp>
-#include <stan/lang/ast/node/assignment_def.hpp>
 #include <stan/lang/ast/node/assgn_def.hpp>
 #include <stan/lang/ast/node/base_var_decl_def.hpp>
 #include <stan/lang/ast/node/binary_op_def.hpp>
 #include <stan/lang/ast/node/break_continue_statement_def.hpp>
 #include <stan/lang/ast/node/cholesky_factor_var_decl_def.hpp>
 #include <stan/lang/ast/node/cholesky_corr_var_decl_def.hpp>
-#include <stan/lang/ast/node/compound_assignment_def.hpp>
 #include <stan/lang/ast/node/conditional_op_def.hpp>
 #include <stan/lang/ast/node/conditional_statement_def.hpp>
 #include <stan/lang/ast/node/corr_matrix_var_decl_def.hpp>
@@ -89,6 +87,7 @@
 #include <stan/lang/ast/node/integrate_ode_control_def.hpp>
 #include <stan/lang/ast/node/lb_idx_def.hpp>
 #include <stan/lang/ast/node/lub_idx_def.hpp>
+#include <stan/lang/ast/node/map_rect_def.hpp>
 #include <stan/lang/ast/node/matrix_var_decl_def.hpp>
 #include <stan/lang/ast/node/multi_idx_def.hpp>
 #include <stan/lang/ast/node/omni_idx_def.hpp>
