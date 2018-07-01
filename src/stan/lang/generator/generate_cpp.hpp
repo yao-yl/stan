@@ -23,7 +23,6 @@
 #include <stan/lang/generator/generate_private_decl.hpp>
 #include <stan/lang/generator/generate_program_reader_fun.hpp>
 #include <stan/lang/generator/generate_public_decl.hpp>
-#include <stan/lang/generator/generate_register_mpi.hpp>
 #include <stan/lang/generator/generate_typedefs.hpp>
 #include <stan/lang/generator/generate_unconstrained_param_names_method.hpp>
 #include <stan/lang/generator/generate_usings.hpp>
@@ -78,7 +77,6 @@ namespace stan {
       generate_class_decl_end(o);
       generate_namespace_end(o);
       generate_model_typedef(model_name, o);
-      generate_register_mpi(model_name, o);
     }
 
   }

@@ -16,7 +16,7 @@ def setup(String pr) {
     """
     if (pr != '')  {
         prNumber = pr.tokenize('-').last()
-        script += """
+        script += """ 
             cd lib/stan_math
             git fetch https://github.com/stan-dev/math +refs/pull/${prNumber}/merge:refs/remotes/origin/pr/${prNumber}/merge
             git checkout refs/remotes/origin/pr/${prNumber}/merge
@@ -34,10 +34,8 @@ def mailBuildResults(String label, additionalEmails='') {
     )
 }
 
-def runTests(String testPath, Boolean separateMakeStep=true) {
-    if (separateMakeStep) {
-        sh "./runTests.py -j${env.PARALLEL} ${testPath} --make-only"
-    }
+def runTests(String testPath) {
+    sh "./runTests.py -j${env.PARALLEL} ${testPath} --make-only"
     try { sh "./runTests.py -j${env.PARALLEL} ${testPath}" }
     finally { junit 'test/**/*.xml' }
 }
@@ -48,10 +46,6 @@ def runTestsWin(String testPath) {
     finally { junit 'test/**/*.xml' }
 }
 
-def deleteDirWin() {
-    bat "attrib -r -s /s /d"
-    deleteDir()
-}
 
 pipeline {
     agent none
@@ -105,24 +99,22 @@ pipeline {
                 stage('Windows Unit') {
                     agent { label 'windows' }
                     steps {
-                        deleteDirWin()
                         unstash 'StanSetup'
                         setupCC(false)
                         runTestsWin("src/test/unit")
                     }
-                    post { always { deleteDirWin() } }
+                    post { always { deleteDir() } }
                 }
-                stage('Windows Headers') {
+                stage('Windows Headers') { 
                     agent { label 'windows' }
                     steps {
-                        deleteDirWin()
                         unstash 'StanSetup'
                         setupCC()
                         bat "make -j${env.PARALLEL} test-headers"
                     }
-                    post { always { deleteDirWin() } }
+                    post { always { deleteDir() } }
                 }
-                stage('Unit') {
+                stage('Unit') { 
                     agent any
                     steps {
                         unstash 'StanSetup'
@@ -133,10 +125,10 @@ pipeline {
                 }
                 stage('Integration') {
                     agent any
-                    steps {
+                    steps { 
                         unstash 'StanSetup'
                         setupCC()
-                        runTests("src/test/integration", separateMakeStep=false)
+                        runTests("src/test/integration")
                     }
                     post { always { deleteDir() } }
                 }
@@ -158,7 +150,7 @@ pipeline {
                 sh """
                     ./runTests.py -j${env.PARALLEL} src/test/performance
                     cd test/performance
-                    RScript ../../src/test/performance/plot_performance.R
+                    RScript ../../src/test/performance/plot_performance.R 
                 """
             }
             post {

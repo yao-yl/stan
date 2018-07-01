@@ -5,7 +5,6 @@
 #include <stan/lang/generator/constants.hpp>
 #include <stan/lang/generator/generate_arg_decl.hpp>
 #include <boost/lexical_cast.hpp>
-#include <cstddef>
 #include <ostream>
 #include <string>
 
@@ -66,7 +65,7 @@ namespace stan {
 
       o << "std::ostream* pstream__";
       if (parameter_defaults) {
-        o << " = nullptr";
+        o << " = 0";
       }
 
       o << ")";

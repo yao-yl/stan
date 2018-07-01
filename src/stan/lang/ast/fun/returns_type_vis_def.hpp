@@ -30,7 +30,19 @@ namespace stan {
       return false;
     }
 
+    bool returns_type_vis::operator()(const assignment& st) const {
+      error_msgs_ << "Expecting return, found assignment statement."
+                  << std::endl;
+      return false;
+    }
+
     bool returns_type_vis::operator()(const assgn& st) const {
+      error_msgs_ << "Expecting return, found assignment statement."
+                  << std::endl;
+      return false;
+    }
+
+    bool returns_type_vis::operator()(const compound_assignment& st) const {
       error_msgs_ << "Expecting return, found assignment statement."
                   << std::endl;
       return false;

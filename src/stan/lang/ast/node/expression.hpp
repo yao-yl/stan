@@ -2,6 +2,7 @@
 #define STAN_LANG_AST_NODE_EXPRESSION_HPP
 
 #include <stan/lang/ast/expr_type.hpp>
+
 #include <boost/variant/recursive_variant.hpp>
 #include <string>
 #include <vector>
@@ -21,7 +22,6 @@ namespace stan {
     struct integrate_ode_control;
     struct algebra_solver;
     struct algebra_solver_control;
-    struct map_rect;
     struct index_op;
     struct index_op_sliced;
     struct conditional_op;
@@ -40,7 +40,6 @@ namespace stan {
                              boost::recursive_wrapper<integrate_ode_control>,
                              boost::recursive_wrapper<algebra_solver>,
                              boost::recursive_wrapper<algebra_solver_control>,
-                             boost::recursive_wrapper<map_rect>,
                              boost::recursive_wrapper<fun>,
                              boost::recursive_wrapper<index_op>,
                              boost::recursive_wrapper<index_op_sliced>,
@@ -52,6 +51,7 @@ namespace stan {
       expression();
       expression(const expression& e);
 
+      // template <typename Expr> expression(const Expr& expr);
       expression(const nil& expr);  // NOLINT(runtime/explicit)
       expression(const int_literal& expr);  // NOLINT(runtime/explicit)
       expression(const double_literal& expr);  // NOLINT(runtime/explicit)
@@ -64,7 +64,6 @@ namespace stan {
       expression(const integrate_ode_control& expr);  // NOLINT
       expression(const algebra_solver& expr);  // NOLINT(runtime/explicit)
       expression(const algebra_solver_control& expr);  // NOLINT
-      expression(const map_rect& expr);  // NOLINT
       expression(const index_op& expr);  // NOLINT(runtime/explicit)
       expression(const index_op_sliced& expr);  // NOLINT(runtime/explicit)
       expression(const conditional_op& expr);  // NOLINT(runtime/explicit)

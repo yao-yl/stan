@@ -45,13 +45,6 @@ transformed parameters {
                              theta,         // parameters
                              x,             // data
                              x_int);        // integer data
-  y_hat <- integrate_ode_adams(harm_osc_ode,  // system
-                               y0,            // initial state
-                               t0,            // initial time
-                               ts,            // solution times
-                               theta,         // parameters
-                               x,             // data
-                               x_int);        // integer data
   y_hat <- integrate_ode_rk45(harm_osc_ode,  // system
                               y0,            // initial state
                               t0,            // initial time
@@ -66,13 +59,6 @@ transformed parameters {
                              theta,         // parameters
                              x,             // data
                              x_int, 0.01, 0.01, 10); // integer data
-  y_hat <- integrate_ode_adams(harm_osc_ode,  // system
-                               y0,            // initial state
-                               t0,            // initial time
-                               ts,            // solution times
-                               theta,         // parameters
-                               x,             // data
-                               x_int, 0.01, 0.01, 10); // integer data
   
 }
 model {

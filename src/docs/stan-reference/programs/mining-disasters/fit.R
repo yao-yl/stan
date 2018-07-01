@@ -1,30 +1,22 @@
-library(rstan)
-library(ggplot2)
-root <- function(x) paste0("src/docs/stan-reference/programs/mining-disasters/", x)
-
-# Load data
-source(root("data.R"));
-
-# Run model
-fit <- stan(root("changepoint.stan"), data = c("r_e", "r_l", "T", "D") );
-
-# Extract log probability
+source("data.R");
+fit <- stan("changepoint.stan", data=c("r_e", "r_l", "T", "D"));
 fit_ss <- extract(fit);
-log_Pr_s <- rep(0, T);
-
+log_Pr_s <- rep(0,T);
 for (t in 1:T)
-  log_Pr_s[t] <- mean(fit_ss$lp[, t]);
-
+  log_Pr_s[t] <- mean(fit_ss$lp[,t]);
 print(log_Pr_s);
 
-log_softmax <- function(x) {
+log <- softmax <- function(x) {
   z <- exp(x - max(x));
   return(log(z / sum(z)));
 }
 
-qplot(1850 + (1:T), log_softmax(log_Pr_s)) +
-  xlab("year") +
-  ylab("log p(change at year)")
+
+library("ggplot2");
+qplot(1:T,log(log_softmax(log_Pr_s))) +
+ xlab("year") + ylab("log p(change at year)") +
+ scale_x_discrete(breaks=c(1875,1900,1925,1950)-1850,
+                  labels=c("1875","1900","1925","1950"))
 
 ss_s <- fit_ss$s
 earliest <- min(ss_s);
@@ -38,5 +30,5 @@ year <- 1850 + (earliest:latest);
 
 ggplot(data = data.frame(year=year, frequency=frequency),
        aes(x=year,y=frequency)) +
-  geom_bar(stat="identity", fill="white",color="black") +
+ geom_bar(stat="identity", fill="white",color="black") +
   xlab("year") + ylab("frequency in 4000 draws")

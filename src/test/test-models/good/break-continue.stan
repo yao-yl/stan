@@ -34,62 +34,58 @@ functions {
     // nested foreach (array)
     while (1) {
       int vs[2, 3];
-      int z;
       for (v in vs) {
-        z = 0;
+        v[1] = 0;
         break;
       }        
       for (v in vs) {
-        z = 0;
+        v[1] = 0;
         continue;
       }
       for (v in vs) {
         for (vv in v) {
-          z = 0;
+          vv = 0;
           break;
         }
-        z = 1;
+        v[1] = 1;
       }
     }
 
     // nested foreach (matrix)
     while (1) {
-      real z;
       matrix[2,3] vs;
       for (v in vs) {
-        z = 0;
+        v = 0;
         break;
       }
       for (v in vs) {
-        z = 3.2;
+        v = 3.2;
         continue;
       }
     }
 
     // nested foreach (vector)
     while (1) {
-      real z;
       vector[2] vs;
       for (v in vs) {
-        z = 0;
+        v = 0;
         break;
       }
       for (v in vs) {
-        z = 3.2;
+        v = 3.2;
         continue;
       }
     }
 
     // nested foreach (rowvector)
     while (1) {
-      real z;
       row_vector[2] vs;
       for (v in vs) {
-        z = 0;
+        v = 0;
         break;
       }
       for (v in vs) {
-        z = 3.2;
+        v = 3.2;
         continue;
       }
     }

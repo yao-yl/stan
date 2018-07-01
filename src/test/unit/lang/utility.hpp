@@ -21,6 +21,13 @@
 #include <exception>
 #include <stdexcept>
 
+stan::io::program_reader create_stub_reader() {
+  stan::io::program_reader r;
+  r.add_event(0, 0, "start", "utility-stub.stan");
+  r.add_event(500, 500, "end", "utility-stub.stan");
+  return r;
+}
+
 /** extract model name from filepath name
  * @param file_name  Name off model file
  */
@@ -58,12 +65,9 @@ bool is_parsable(const std::string& file_name,
     return false;
   }
   std::string model_name = file_name_to_model_name(file_name);
-  std::vector<std::string> search_path;
-  stan::io::program_reader reader(fs, file_name, search_path);
-  std::string s = reader.program();
-  std::stringstream ss(s);
+  stan::io::program_reader reader = create_stub_reader();
   bool parsable
-    = stan::lang::parse(msgs, ss, model_name, reader, prog, allow_undefined);
+    = stan::lang::parse(msgs, fs, model_name, reader, prog, allow_undefined);
   return parsable;
 }
 
@@ -127,14 +131,6 @@ void test_throws(const std::string& model_name, const std::string& error_msg) {
   std::stringstream msgs;
   try {
     is_parsable_folder(model_name, "bad", &msgs);
-    if (msgs.str().length() > 0)
-      FAIL() << std::endl << "*********************************" << std::endl
-             << "model name=" << model_name << std::endl
-             << "*** no exception thrown by parser" << std::endl
-             << "*** parser msgs: msgs.str()=" << msgs.str() << std::endl
-             << "*** expected: error_msg=" << error_msg << std::endl
-             << "*********************************" << std::endl
-             << std::endl;
   } catch (const std::invalid_argument& e) {
     if (std::string(e.what()).find(error_msg) == std::string::npos
         && msgs.str().find(error_msg) == std::string::npos) {
@@ -194,14 +190,12 @@ void test_warning(const std::string& model_name,
 }
 
 std::string model_to_cpp(const std::string& model_text) {
-  std::string model_name = "unnamed_unit_test";
+  std::string model_name = "foo";
   std::stringstream ss(model_text);
   std::stringstream msgs;
   stan::lang::program prog;
-  stan::io::program_reader reader;
-  // fake reader history - model is parseable, no includes
-  reader.add_event(0, 0, "start", "unnamed_unit_test");
-  reader.add_event(500, 500, "end", "unnamed_unit_test");
+
+  stan::io::program_reader reader = create_stub_reader();
   bool parsable = stan::lang::parse(&msgs, ss, model_name, reader, prog);
   EXPECT_TRUE(parsable);
 
@@ -241,8 +235,7 @@ void expect_match(const std::string& model_name,
   std::string cpp_out = cpp_out_stream.str();
   file_stream.close();
   EXPECT_TRUE(count_matches(target, cpp_out) > 0)
-      << "looking for: " << target << std::endl
-      << "found: " << cpp_out << std::endl;
+    << "looking for: " << target;
 }
 
 /**
@@ -262,3 +255,4 @@ void test_num_warnings(const std::string& model_name,
     << "looking for: " << warning_msg;
 }
 #endif
+

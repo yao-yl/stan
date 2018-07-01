@@ -8,7 +8,9 @@ namespace stan {
   namespace lang {
 
     struct nil;
+    struct assignment;
     struct assgn;
+    struct compound_assignment;
     struct sample;
     struct increment_log_prob_statement;
     struct expression;
@@ -32,7 +34,9 @@ namespace stan {
        * The variant type of statements.
        */
       typedef boost::variant<boost::recursive_wrapper<nil>,
+                     boost::recursive_wrapper<assignment>,
                      boost::recursive_wrapper<assgn>,
+                     boost::recursive_wrapper<compound_assignment>,
                      boost::recursive_wrapper<sample>,
                      boost::recursive_wrapper<increment_log_prob_statement>,
                      boost::recursive_wrapper<expression>,
@@ -76,7 +80,23 @@ namespace stan {
        *
        * @param st basic statement
        */
+      statement(const assignment& st);  // NOLINT(runtime/explicit)
+
+      /**
+       * Construct a statement variant type wrapper from the specified
+       * basic statement.
+       *
+       * @param st basic statement
+       */
       statement(const assgn& st);  // NOLINT(runtime/explicit)
+
+      /**
+       * Construct a statement variant type wrapper from the specified
+       * basic statement.
+       *
+       * @param st basic statement
+       */
+      statement(const compound_assignment& st);  // NOLINT(runtime/explicit)
 
       /**
        * Construct a statement variant type wrapper from the specified

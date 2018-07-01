@@ -29,35 +29,35 @@ TEST(langParserVarDeclsGrammarDef, validateIntExpr) {
 TEST(langParserVarDeclsGrammarDef, setIntRangeLower) {
   test_parsable("validate_set_int_range_lower_good");
   test_throws("validate_set_int_range_lower_bad1",
-              "Expression denoting integer required");
+              "expression denoting integer required");
   test_throws("validate_set_int_range_lower_bad2",
-              "Expression denoting integer required");
+              "expression denoting integer required");
   test_throws("validate_set_int_range_lower_bad3",
-              "Expression denoting integer required");
+              "expression denoting integer required");
 }
 
 TEST(langParserVarDeclsGrammarDef, setIntRangeUpper) {
   test_parsable("validate_set_int_range_upper_good");
   test_throws("validate_set_int_range_upper_bad1",
-              "Expression denoting integer required");
+              "expression denoting integer required");
   test_throws("validate_set_int_range_upper_bad2",
-              "Expression denoting integer required");
+              "expression denoting integer required");
 }
 
 TEST(langParserVarDeclsGrammarDef, setDoubleRangeLower) {
   test_parsable("validate_set_double_range_lower_good");
   test_throws("validate_set_double_range_lower_bad1",
-              "Expression denoting real required");
+              "expression denoting real required");
   test_throws("validate_set_double_range_lower_bad2",
-              "Expression denoting real required");
+              "expression denoting real required");
 }
 
 TEST(langParserVarDeclsGrammarDef, setDoubleRangeUpper) {
   test_parsable("validate_set_double_range_upper_good");
   test_throws("validate_set_double_range_upper_bad1",
-              "Expression denoting real required");
+              "expression denoting real required");
   test_throws("validate_set_double_range_upper_bad2",
-              "Expression denoting real required");
+              "expression denoting real required");
 }
 
 TEST(langParserVarDeclsGrammarDef, parametersInLocals) {
